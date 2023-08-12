@@ -9,3 +9,8 @@ export FLASK_APP="main:app"
 export FLASK_ENV="development"
 export APP_SETTINGS_MODULE="config.default"
 ~~~
+
+
+# TODO
+- Finish readme
+- code documentation
