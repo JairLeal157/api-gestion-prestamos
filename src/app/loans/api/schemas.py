@@ -20,6 +20,6 @@ class LoanSchema(marsh.Schema):
             'student_id',
             'auxiliar_name',
             'auxiliar_id',
-            'loan_date',
-            'loan_state',
+            'date',
+            'state',
         )

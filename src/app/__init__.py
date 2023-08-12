@@ -10,6 +10,7 @@ from .ext import marsh, migrate
 def create_app(settings_module):
     app = Flask(__name__)
     app.app_context().push()
+    app.debug = True
     app.config.from_object(settings_module)
     db.init_app(app)
     marsh.init_app(app)
@@ -28,20 +29,21 @@ def create_app(settings_module):
 def register_error_handlers(app: Flask):
     @app.errorhandler(Exception)
     def handle_exception_error(e):
-        return jsonify({'msg': 'Internal server error'})
+        return jsonify({'message': 'Internal server error',
+                        'error': str(e)})
 
     @app.errorhandler(405)
     def handle_405_error(e):
-        return jsonify({'msg': 'Method not allowed'}), 405
+        return jsonify({'message': 'Method not allowed'}), 405
 
     @app.errorhandler(403)
     def handle_403_error(e):
-        return jsonify({'msg': 'Forbidden Error'}), 403
+        return jsonify({'message': 'Forbidden Error'}), 403
 
     @app.errorhandler(AppErrorBaseClass)
     def handle_app_base_error(e):
-        return jsonify({'msg': str(e)}), 500
+        return jsonify({'message': str(e)}), 500
 
     @app.errorhandler(ObjectNotFound)
     def handle_object_not_found_error(e):
-        return jsonify({'msg': 'Object not found'}), 404
+        return jsonify({'message': 'Object not found'}), 404
