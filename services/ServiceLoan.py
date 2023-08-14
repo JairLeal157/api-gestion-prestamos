@@ -2,7 +2,7 @@ from datetime import date
 from typing import List
 from config.connection import engine
 from models.Loans import loans as loansTable
-from schemas.Loan import Loan
+from schemas.Loan import Loan, example_loan
 
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
@@ -45,7 +45,10 @@ class ServiceLoan:
         except SQLAlchemyError as e:
             print("Error al obtener el elemento:", e)
             return False
-        return result
+        if result is None:
+            return False
+        return Loan(**result._asdict())
+    
     def get_loan_by_student(self, student_document: int):
         try:
             session = sessionmaker(bind=engine)()
@@ -53,6 +56,8 @@ class ServiceLoan:
             session.close()
         except SQLAlchemyError as e:
             print("Error al obtener el elemento:", e)
+            return False
+        if result is None:
             return False
         return [Loan(**loan._asdict()) for loan in result]
     
@@ -97,6 +102,13 @@ class ServiceLoan:
         except SQLAlchemyError as e:
             print("Error al obtener los elementos:", e)
             return False
+        if result is None:
+            return False
         return [Loan(**loan._asdict()) for loan in result]
-
+    def validate_date(self, date_text):
+        try:
+            date.fromisoformat(date_text)
+        except ValueError:
+            return False
+        return True
 
