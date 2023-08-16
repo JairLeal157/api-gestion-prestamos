@@ -2,9 +2,9 @@ from sqlalchemy import create_engine, MetaData
 
 # Datos de conexión
 user = "root"
-password = "4JGqspLoqSqAmIien753"
-host = "containers-us-west-159.railway.app"
-port = "5964"
+password = "pJebl3zB3k6hCExS3Nyv"
+host = "containers-us-west-149.railway.app"
+port = "6839"
 database = "railway"
 
 # Crear la cadena de conexión
